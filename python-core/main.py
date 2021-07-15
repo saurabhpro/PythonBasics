@@ -1,5 +1,7 @@
 # This is a sample Python script.
 
+import django
+
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 from cars import Car
@@ -9,6 +11,8 @@ from functions import get_formatted_name, make_pizza, adder, intro
 from list import list_handling
 from map import map_handling
 from pluralsight import *
+
+print(django.get_version())
 
 
 def print_hi(name):

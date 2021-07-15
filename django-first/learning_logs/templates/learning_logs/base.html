@@ -1,0 +1,13 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'learning_logs/styles.css' %}">
+
+<p>
+    <!--In this example,
+    learning_logs is the namespace and index is a uniquely named URL pattern
+    in that namespace. The namespace comes from the value we assigned to
+    app_name in the learning_logs/urls.py file.-->
+    <a href="{% url 'learning_logs:index' %}">Learning Log</a>
+
+    <a href="{% url 'learning_logs:topics' %}">Topics</a>
+</p>
+{% block content %}{% endblock content %}

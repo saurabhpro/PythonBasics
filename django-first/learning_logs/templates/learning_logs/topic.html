@@ -1,0 +1,23 @@
+{% extends 'learning_logs/base.html' %}
+
+{% block content %}
+
+<h1>Topic: {{ topic }}</h1>
+
+<h2>Entries:</h2>
+<ul>
+    {% for entry in entries %}
+    <li>
+        <!--In Django templates, a vertical line (|) represents a template filter—a function that modifies the value in a template variable.-->
+        <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
+        <!--filter linebreaks y ensures that long text entries include line breaks in a format understood by browsers rather than showing a block of uninterrupted text.-->
+        <p>{{ entry.text|linebreaks }}</p>
+    </li>
+    {% empty %}
+    <li>
+        There are no entries for this topic yet.
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}

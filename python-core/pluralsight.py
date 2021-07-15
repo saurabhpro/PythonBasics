@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class ClassA:
     def a(self):
         return 'A'
@@ -23,3 +26,7 @@ def even_series():
     while True:
         yield num
         num += 2
+        #defaultdict
+
+        #myset = (1, 3).set()
+
