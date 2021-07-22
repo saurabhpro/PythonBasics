@@ -1,15 +1,19 @@
 from datetime import timedelta
-from django.utils import timezone
+
 from django.db import migrations
+from django.utils import timezone
+
 
 def create_sample_product_data(apps, schema_editor):
     Product = apps.get_model('store', 'Product')
     Product(
-        id=1, name='Mineral Water Strawberry', description='Natural-flavored strawberry with an anti-oxidant kick.', price=1.00,
+        id=1, name='Mineral Water Strawberry', description='Natural-flavored strawberry with an anti-oxidant kick.',
+        price=1.00,
         photo='products/mineralwater-strawberry.jpg',
     ).save()
     Product(
-        id=2, name='Mineral Water Raspberry', description='Flavoured with raspberry, loaded with anti-oxidants.', price=2.00,
+        id=2, name='Mineral Water Raspberry', description='Flavoured with raspberry, loaded with anti-oxidants.',
+        price=2.00,
         photo='products/mineralwater-raspberry.jpg',
     ).save()
     Product(
@@ -26,6 +30,7 @@ def create_sample_product_data(apps, schema_editor):
         sale_end=timezone.now() + timedelta(days=10),
         photo='products/vitamin-bcomplex.jpg',
     ).save()
+
 
 class Migration(migrations.Migration):
     dependencies = [

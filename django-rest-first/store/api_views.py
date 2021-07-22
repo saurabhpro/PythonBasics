@@ -1,6 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.exceptions import ValidationError
 from rest_framework.filters import SearchFilter
-from rest_framework.generics import ListAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.pagination import LimitOffsetPagination
 
 from store.models import Product
@@ -48,3 +49,62 @@ class ProductList(ListAPIView):
             )
 
         return self.queryset
+
+
+# post end point
+class ProductCreate(CreateAPIView):
+    """
+         create a product instance.
+    """
+    serializer_class = ProductSerializer
+
+    # *args Non-Keyword Arguments - just values
+    # **kwargs Keyword Arguments - a dictionary with `key name : value`
+    def create(self, request, *args, **kwargs):
+        try:
+            price = request.data.get('price')
+            if price is not None and float(price) <= 0.0:
+                raise ValidationError({'price': 'Must be above $0.00'})
+
+        except ValueError:
+            raise ValidationError({'price': 'A valid number is required'})
+
+        return super().create(request, *args, **kwargs)
+
+
+# combines RetrieveAPIView, UpdateAPIView, DestroyAPIView (get, put, patch, delete)
+# note: there is a lot many combination so that we can use one URL
+class ProductRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    """
+       Retrieve, update or delete a product instance.
+    """
+    queryset = Product.objects.all()
+    lookup_field = 'id'
+    serializer_class = ProductSerializer
+
+    def delete(self, request, *args, **kwargs):
+        """
+            delete a product instance and clear django cache
+        """
+        product_id = request.data.get('id')
+        response = super().delete(request, *args, **kwargs)
+        if response.status_code == 204:
+            from django.core.cache import cache
+            cache.delete(f'product_data_{product_id}')
+        return response
+
+    def update(self, request, *args, **kwargs):
+        """
+            update a product instance and update django cache
+        """
+        # perform actual update using args on resource identified by request
+        response = super().update(request, *args, **kwargs)
+        if response.status_code == 200:
+            from django.core.cache import cache
+            product = response.data
+            cache.set(f'product_data_{product["id"]}', {
+                'name': product['name'],
+                'description': product['description'],
+                'price': product['price'],
+            })
+        return response
