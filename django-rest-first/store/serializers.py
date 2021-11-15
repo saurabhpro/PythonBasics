@@ -1,7 +1,8 @@
 from abc import ABC
 
 from rest_framework import serializers
-from store.models import Product, ShoppingCartItem
+
+from .models import Product, ShoppingCartItem
 
 
 class ProductSerializer(serializers.ModelSerializer):
