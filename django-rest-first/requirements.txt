@@ -1,4 +1,4 @@
-Django==3.2.9
+Django==3.2.11
 djangorestframework==3.12.4
 django-filter==21.1
 mock==4.0.3
