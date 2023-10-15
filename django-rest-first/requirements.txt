@@ -2,5 +2,5 @@ Django==4.2.6
 djangorestframework==3.14.0
 django-filter==23.3
 mock==5.1.0
-Pillow==10.0.1
+Pillow==10.1.0
 coverage
