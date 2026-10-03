@@ -1,6 +1,6 @@
 Django==6.0.7
 djangorestframework==3.17.1
-django-filter==26.1
+django-filter==26.2
 mock==5.2.0
 Pillow==12.3.0
 coverage
